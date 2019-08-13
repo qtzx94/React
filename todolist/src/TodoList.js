@@ -51,12 +51,10 @@ class TodoList extends React.Component {
     componentDidMount() {
         console.log('componentDidMount');
         axios.get('/api/todolist')
-            .then((res) => {
-                this.setState(() => {
-                    return {
-                        list: res.data
-                    }
-                });
+            .then((res) => { 
+                this.setState(() => ({
+                    list: [...res.data]
+                }));
             })
             .catch(() => {alert('error')})
     }
