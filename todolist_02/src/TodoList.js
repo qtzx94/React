@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import store from './store/index';
-import { getInputChangeAction, getAddItemAction, getDeleteItemAction } from './store/actionCreators';
+import { getInputChangeAction, getAddItemAction, getDeleteItemAction, getTodoList } from './store/actionCreators';
 import TodoListUI from './TodoListUI';
 
 class TodoList extends Component {
@@ -26,6 +26,12 @@ class TodoList extends Component {
                 handleItemDelete={this.handleItemDelete}
             />
         )
+    }
+
+    componentDidMount() {
+        // redux-thunk中间件作用是可以在action中写异步代码, 可以使action接受函数, 否则action只能接受对象
+        const action = getTodoList();
+        store.dispatch(action);
     }
 
     handleInputChange(e) {
