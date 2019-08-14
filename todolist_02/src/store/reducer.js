@@ -1,12 +1,6 @@
 const defaultState = {
-    inputValue: '123',
-    list: [
-        'Racing car sprays burning fuel into crowd.',
-        'Japanese princess to wed commoner.',
-        'Australian walks 100km after outback crash.',
-        'Man charged over missing wedding girl.',
-        'Los Angeles battles huge wildfires.',
-    ]
+    inputValue: '',
+    list: []
 };
 
 // reducer 可以接收state，但是不能修改state，所以使用JSON.parse(JSON.stringify(state)) 实现对state数据深拷贝
@@ -20,6 +14,11 @@ export default (state = defaultState, action) => {
         const newState = JSON.parse(JSON.stringify(state));
         newState.list.push(newState.inputValue);
         newState.inputValue = '';
+        return newState;
+    }
+    if(action.type === 'delete_todo_item') {
+        const newState = JSON.parse(JSON.stringify(state));
+        newState.list.splice(action.index, 1);
         return newState;
     }
     return state;
