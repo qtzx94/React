@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Input, Button, List } from 'antd';
-
-const data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.',
-];
+import store from './store/index';
 
 class TodoList extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = store.getState();
+    }
 
     render() {
         return (
@@ -22,7 +20,7 @@ class TodoList extends Component {
                 <List
                     style={{ marginTop: 10, width: 300 }}
                     bordered
-                    dataSource={data}
+                    dataSource={this.state.list}
                     renderItem={item => (<List.Item>{item}</List.Item>)}
                 />
             </div>
