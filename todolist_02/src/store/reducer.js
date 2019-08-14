@@ -5,7 +5,8 @@ const defaultState = {
     list: []
 };
 
-// reducer 可以接收state，但是不能修改state，所以使用JSON.parse(JSON.stringify(state)) 实现对state数据深拷贝
+// reducer 可以接收state，但是不能修改state，使用JSON.parse(JSON.stringify(state)) 实现对state数据深拷贝
+// reducer必须是纯函数（纯函数指，给定固定的输入，就一定会有固定的输出，且不会有任何副作用）函数里面有setTimeout， ajax请求都不是纯函数
 export default (state = defaultState, action) => {
     if(action.type === CHANGE_INPUT_VALUE) {
         const newState = JSON.parse(JSON.stringify(state));
