@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import store from './store/index';
-import { getInputChangeAction, getAddItemAction, getDeleteItemAction, getTodoList } from './store/actionCreators';
+import { getInputChangeAction, getAddItemAction, getDeleteItemAction, getInitList } from './store/actionCreators';
 import TodoListUI from './TodoListUI';
 
 class TodoList extends Component {
@@ -29,10 +29,8 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        // redux-thunk中间件（原理就是对dispatch方法升级）作用是可以在action中写异步代码, 可以使dispatch方法接受函数, 否则dispatch方法只能接受对象。
-        // 当dispatch接收到函数时，会先执行函数
-        // 当接收到对象时，直接传给store
-        const action = getTodoList();
+        // redux-sagas 作用是使得dispatch派发的action能在sagas.js文件中接收到
+        const action = getInitList();
         store.dispatch(action);
     }
 
