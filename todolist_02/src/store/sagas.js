@@ -4,9 +4,13 @@ import { initListAction } from './actionCreators';
 import axios from 'axios';
 
 function* getInitList() {
-    const res = yield axios.get('/api/list.json');
-    const action = initListAction(res.data);
-    yield put(action);
+    try {
+        const res = yield axios.get('/api/list.json');
+        const action = initListAction(res.data);
+        yield put(action);
+    } catch (error) {
+        console.log('list.json网络请求失败');
+    }
 }
 
 function* mySaga() {
