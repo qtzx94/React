@@ -1,5 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import { actionCreators } from './store';
 import { IconfontStyle } from '../../statics/iconfont/iconfont';
 import { 
     HeaderWrapper ,
@@ -12,69 +14,66 @@ import {
     Button
 } from './style';
 
-class Header extends Component {
+// 无状态组件，负责页面样式
+const Header = (props) => {
+    return (
+        <Fragment>
+            <IconfontStyle />
+            <HeaderWrapper>
+                <Logo />
+                <Nav>
+                    <NavItem className="left active">首页</NavItem>
+                    <NavItem className="left">下载App</NavItem>
+                    <NavItem className="right">登录</NavItem>
+                    <NavItem className="right">
+                        <span className="iconfont">&#xe636;</span>
+                    </NavItem>
+                    <SearchWrapper>
+                        <CSSTransition
+                            // in 用来控制入场和出场动画
+                            in={props.focused}
+                            timeout={200}
+                            classNames="slide"
+                        >
+                            <NavSearch 
+                                className={props.focused ? 'focused' : ''}
+                                onFocus={props.handleInputFocus}
+                                onBlur={props.handleInputBlur}
+                            ></NavSearch>
+                        </CSSTransition>
+                        <span className={props.focused ? 'focused iconfont' : 'iconfont'}>&#xe631;</span>
+                    </SearchWrapper>
+                </Nav>
+                <Addition>
+                    <Button className="writting">
+                        <span className="iconfont">&#xe624;</span>
+                        写文章
+                    </Button>
+                    <Button className="reg">注册</Button>
+                </Addition>
+            </HeaderWrapper>
+        </Fragment>
+    )
+}
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            focused: false 
-        }
-        this.handleInputFocus = this.handleInputFocus.bind(this);
-        this.handleInputBlur = this.handleInputBlur.bind(this);
-    }
-
-    render() {
-        return (
-            <Fragment>
-                <IconfontStyle />
-                <HeaderWrapper>
-                    <Logo />
-                    <Nav>
-                        <NavItem className="left active">首页</NavItem>
-                        <NavItem className="left">下载App</NavItem>
-                        <NavItem className="right">登录</NavItem>
-                        <NavItem className="right">
-                            <span className="iconfont">&#xe636;</span>
-                        </NavItem>
-                        <SearchWrapper>
-                            <CSSTransition
-                                // in 用来控制入场和出场动画
-                                in={this.state.focused}
-                                timeout={200}
-                                classNames="slide"
-                            >
-                                <NavSearch 
-                                    className={this.state.focused ? 'focused' : ''}
-                                    onFocus={this.handleInputFocus}
-                                    onBlur={this.handleInputBlur}
-                                ></NavSearch>
-                            </CSSTransition>
-                            <span className={this.state.focused ? 'focused iconfont' : 'iconfont'}>&#xe631;</span>
-                        </SearchWrapper>
-                    </Nav>
-                    <Addition>
-                        <Button className="writting">
-                            <span className="iconfont">&#xe624;</span>
-                            写文章
-                        </Button>
-                        <Button className="reg">注册</Button>
-                    </Addition>
-                </HeaderWrapper>
-            </Fragment>
-        )
-    }
-
-    handleInputFocus() {
-        this.setState({
-            focused: true
-        })
-    }
-
-    handleInputBlur() {
-        this.setState({
-            focused: false
-        })
+const mapStateToProps = (state) => {
+    return {
+        focused: state.header.focused
     }
 }
 
-export default Header;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleInputFocus() {
+            dispatch(actionCreators.searchFocus());
+        },
+         
+        handleInputBlur() {
+            dispatch(actionCreators.searchBlur());
+        }
+    }
+}
+
+
+// connect返回的是容器组件，负责页面逻辑，处理数据
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
