@@ -2,17 +2,17 @@ import * as constants from './constants';
 import { fromJS } from 'immutable';
 import axios from 'axios';
 
+const changeList = (data) => ({
+    type: constants.CHANGE_LIST,
+    data: fromJS(data) // fromJS功能是把普通数组转化成immutable数组
+})
+
 export const searchFocus = () => ({
     type: constants.SEARCH_FOCUS
 })
 
 export const searchBlur = () => ({
     type: constants.SEARCH_BLUR
-})
-
-const changeList = (data) => ({
-    type: constants.CHANGE_LIST,
-    data: fromJS(data)
 })
 
 // redux-thunk 作用是使得action返回一个函数

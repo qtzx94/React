@@ -23,7 +23,8 @@ class Header extends Component {
 
     // 隐藏显示搜索列表
     getListArea() {
-        if (this.props.focused) {
+        const { focused, list } = this.props; // 解构赋值
+        if (focused) {
             return (
                 <SearchInfo>
                     <SearchInfoTitle>
@@ -31,7 +32,7 @@ class Header extends Component {
                         <SearchInfoSwitch>换一批</SearchInfoSwitch>
                     </SearchInfoTitle>
                     <div>
-                        {this.props.list.map((item) => {
+                        {list.map((item) => {
                             return <SearchInfoItem key={item}>{item}</SearchInfoItem>
                         })}
                     </div>
@@ -43,6 +44,7 @@ class Header extends Component {
     }
 
     render() {
+        const { focused, handleInputFocus, handleInputBlur } = this.props;
         return (
             <Fragment>
                 <IconfontStyle />
@@ -58,17 +60,17 @@ class Header extends Component {
                         <SearchWrapper>
                             <CSSTransition
                                 // in 用来控制入场和出场动画
-                                in={this.props.focused}
+                                in={focused}
                                 timeout={200}
                                 classNames="slide"
                             >
                                 <NavSearch
-                                    className={this.props.focused ? 'focused' : ''}
-                                    onFocus={this.props.handleInputFocus}
-                                    onBlur={this.props.handleInputBlur}
+                                    className={focused ? 'focused' : ''}
+                                    onFocus={handleInputFocus}
+                                    onBlur={handleInputBlur}
                                 ></NavSearch>
                             </CSSTransition>
-                            <span className={this.props.focused ? 'focused iconfont' : 'iconfont'}>&#xe631;</span>
+                            <span className={focused ? 'focused iconfont' : 'iconfont'}>&#xe631;</span>
                             {/* 隐藏显示搜索列表 */}
                             {this.getListArea()}
                         </SearchWrapper>
