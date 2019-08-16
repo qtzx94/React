@@ -7,9 +7,9 @@ const defaultState = {
 // reducer.js是一个纯函数
 export default (state = defaultState, action) => {
     if(action.type === contants.SEARCH_FOCUS) {
-        const newState = JSON.parse(JSON.stringify(state));
-        newState.focused = true;
-        return newState;
+        return {
+            focused: true
+        }
     }
     if(action.type === contants.SEARCH_BLUR) {
         const newState = JSON.parse(JSON.stringify(state));
