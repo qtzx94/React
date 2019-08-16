@@ -4,7 +4,10 @@ import { fromJS } from 'immutable';
 // fromJS将普通对象转化成immutable对象
 const defaultState = fromJS({
     focused: false,
-    list: [] 
+    mouseIn: false,
+    list: [],
+    page: 1,
+    totalPage: 1 
 });
 
 // reducer.js是一个纯函数
@@ -16,8 +19,18 @@ export default (state = defaultState, action) => {
         case constants.SEARCH_BLUR:
             return state.set('focused', false);
         case constants.CHANGE_LIST:
-            return state.set('list', action.data);
+            // return state.set('list', action.data).set('totalPage', action.totalPage); 
+            return state.merge({
+                list: action.data,
+                totalPage: action.totalPage
+            });  
+        case constants.MOUSE_ENTER:
+            return state.set('mouseIn', true);
+        case constants.MOUSE_LEAVE:
+            return state.set('mouseIn', false);
+        case constants.CHANGE_PAGE:
+            return state.set('page', action.page);
         default: 
             return state;
     }
-}
+}                                                                                                                                                                        
