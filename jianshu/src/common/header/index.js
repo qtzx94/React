@@ -60,7 +60,7 @@ class Header extends Component {
     }
 
     render() {
-        const { focused, handleInputFocus, handleInputBlur } = this.props;
+        const { focused, handleInputFocus, handleInputBlur, list } = this.props;
         return (
             <Fragment>
                 <IconfontStyle />
@@ -82,7 +82,7 @@ class Header extends Component {
                             >
                                 <NavSearch
                                     className={focused ? 'focused' : ''}
-                                    onFocus={handleInputFocus}
+                                    onFocus={() => handleInputFocus(list)}
                                     onBlur={handleInputBlur}
                                 ></NavSearch>
                             </CSSTransition>
@@ -117,8 +117,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleInputFocus() {
-            dispatch(actionCreators.getList());
+        handleInputFocus(list) {
+            if(list.size === 0) {
+                dispatch(actionCreators.getList());
+            }
             dispatch(actionCreators.searchFocus());
         },
         handleInputBlur() {
@@ -140,7 +142,7 @@ const mapDispatchToProps = (dispatch) => {
             }
             originAngle+=360;
             spin.style.transform = `rotate(${originAngle}deg)`;
-            
+
             if(page < totalPage) {
                 dispatch(actionCreators.changePage(page + 1));
             }else {
