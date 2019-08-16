@@ -1,9 +1,29 @@
-import * as contants from './constants';
+import * as constants from './constants';
+import { fromJS } from 'immutable';
+import axios from 'axios';
 
 export const searchFocus = () => ({
-    type: contants.SEARCH_FOCUS
+    type: constants.SEARCH_FOCUS
 })
 
 export const searchBlur = () => ({
-    type: contants.SEARCH_BLUR
+    type: constants.SEARCH_BLUR
 })
+
+const changeList = (data) => ({
+    type: constants.CHANGE_LIST,
+    data: fromJS(data)
+})
+
+// redux-thunk 作用是使得action返回一个函数
+export const getList = () => {
+    return (dispatch) =>{
+        // react-create-app会先去查找工程目录下的路由，再去找public文件夹下面是否有对应路径
+        axios.get('/api/headerList.json').then((res) => {
+            const data = res.data;
+            dispatch(changeList(data.data));
+        }).catch(() => {
+            console.log('error');
+        })
+    }
+}
