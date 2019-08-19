@@ -14,8 +14,8 @@ import {
 } from './style';
 
 class Home extends PureComponent {
-    // PureComponent内部封装了shouldUpdateComponent()生命周期函数
-    
+    // PureComponent内部封装了shouldUpdateComponent()生命周期函数来减少重复渲染
+
     handleScrollTop() {
         window.scrollTo(0, 0);
     }
