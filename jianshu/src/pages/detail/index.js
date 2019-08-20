@@ -34,4 +34,5 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
+// withRouter(Detail) 让Detail组件有能力获取router里面的内容
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Detail));
