@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { actionCreators } from './store';
+import { actionCreators as loginActionCreators } from '../../pages/login/store';
 import { IconfontStyle } from '../../statics/iconfont/iconfont';
 import { Link } from 'react-router-dom';
 import {
@@ -61,7 +62,7 @@ class Header extends Component {
     }
 
     render() {
-        const { focused, handleInputFocus, handleInputBlur, list, login } = this.props;
+        const { focused, handleInputFocus, handleInputBlur, list, login, logout } = this.props;
         return (
             <Fragment>
                 <IconfontStyle />
@@ -74,7 +75,7 @@ class Header extends Component {
                         <NavItem className="left">下载App</NavItem>
                         {
                             login ? 
-                                <NavItem className="right">退出</NavItem> : 
+                                <NavItem className="right" onClick={logout}>退出</NavItem> : 
                             <Link to="/login"> 
                                 <NavItem className="right">登录</NavItem>
                             </Link>
@@ -158,6 +159,10 @@ const mapDispatchToProps = (dispatch) => {
             }else {
                 dispatch(actionCreators.changePage(1));
             }
+        },
+        logout() {
+            // loginActionCreators：改变的是login组件下的数据，所以调用login里面的actionCreators
+            dispatch(loginActionCreators.logout());
         }
     }
 }
