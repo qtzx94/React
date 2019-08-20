@@ -5,7 +5,7 @@ const getDetailData = (title, content) => ({
     type: constants.GET_DETAIL_DATA,
     title,
     content
-})
+});
 
 export const getDetail = (id) => {
     return (dispatch) => {
